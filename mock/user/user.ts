@@ -15,23 +15,23 @@ const adminInfo = {
   token,
   permissions: [
     {
-      label: '主控台',
+      label: 'Console',
       value: 'dashboard_console',
     },
     {
-      label: '监控页',
+      label: 'Monitoring page',
       value: 'dashboard_monitor',
     },
     {
-      label: '工作台',
+      label: 'Workplace',
       value: 'dashboard_workplace',
     },
     {
-      label: '基础列表',
+      label: 'Basic list',
       value: 'basic_list',
     },
     {
-      label: '基础列表删除',
+      label: 'Basic list deletion',
       value: 'basic_list_delete',
     },
   ],

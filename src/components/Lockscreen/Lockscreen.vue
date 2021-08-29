@@ -9,14 +9,14 @@
     <template v-if="!showLogin">
       <div class="lock-box">
         <div class="lock">
-          <span class="lock-icon" title="解锁屏幕" @click="onLockLogin(true)">
+          <span class="lock-icon" title="Unlock screen" @click="onLockLogin(true)">
             <n-icon>
               <lock-outlined />
             </n-icon>
           </span>
         </div>
       </div>
-      <!--充电-->
+      <!--Charge-->
       <recharge
         :battery="battery"
         :battery-status="batteryStatus"
@@ -26,7 +26,7 @@
 
       <div class="local-time">
         <div class="time">{{ hour }}:{{ minute }}</div>
-        <div class="date">{{ month }}月{{ day }}号，星期{{ week }}</div>
+        <div class="date">{{ month }}Month{{ day }}Day，Week{{ week }}</div>
       </div>
       <div class="computer-status">
         <span :class="{ offline: !online }" class="network">
@@ -36,7 +36,7 @@
       </div>
     </template>
 
-    <!--登录-->
+    <!--Log in-->
     <template v-if="showLogin">
       <div class="login-box">
         <n-avatar :size="128">
@@ -50,7 +50,7 @@
           autofocus
           v-model:value="loginParams.password"
           @keyup.enter="onLogin"
-          placeholder="请输入登录密码"
+          placeholder="Please enter your password"
         >
           <template #suffix>
             <n-icon @click="onLogin" style="cursor: pointer">
@@ -65,9 +65,9 @@
         </div>
 
         <div class="w-full mt-1 flex justify-around">
-          <div><a @click="showLogin = false">返回</a></div>
-          <div><a @click="goLogin">重新登录</a></div>
-          <div><a @click="onLogin">进入系统</a></div>
+          <div><a @click="showLogin = false">Return</a></div>
+          <div><a @click="goLogin">Re-Register</a></div>
+          <div><a @click="onLogin">Enter The System</a></div>
         </div>
       </div>
     </template>
@@ -109,7 +109,7 @@
       const useLockscreen = useLockscreenStore();
       const userStore = useUserStore();
 
-      // 获取时间
+      // Get Time
       const { month, day, hour, minute, second, week } = useTime();
       const { online } = useOnline();
 
@@ -121,8 +121,8 @@
       const username = userInfo['username'] || '';
       const state = reactive({
         showLogin: false,
-        loginLoading: false, // 正在登录
-        isLoginError: false, //密码错误
+        loginLoading: false, // Loggin In
+        isLoginError: false, //Wrong Password
         errorMsg: '密码错误',
         loginParams: {
           username: username || '',
@@ -130,10 +130,10 @@
         },
       });
 
-      // 解锁登录
+      // Unlock login
       const onLockLogin = (value: boolean) => (state.showLogin = value);
 
-      // 登录
+      // Log in
       const onLogin = async () => {
         if (!state.loginParams.password.trim()) {
           return;
@@ -154,7 +154,7 @@
         state.loginLoading = false;
       };
 
-      //重新登录
+      //re-register
       const goLogin = () => {
         onLockLogin(false);
         useLockscreen.setLock(false);

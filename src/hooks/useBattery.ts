@@ -1,10 +1,10 @@
 import { computed, onMounted, reactive, toRefs } from 'vue';
 
 interface Battery {
-  charging: boolean; // 当前电池是否正在充电
-  chargingTime: number; // 距离充电完毕还需多少秒，如果为0则充电完毕
-  dischargingTime: number; // 代表距离电池耗电至空且挂起需要多少秒
-  level: number; // 代表电量的放大等级，这个值在 0.0 至 1.0 之间
+  charging: boolean; // Whether the battery is currently being charged
+  chargingTime: number; // How many seconds will it take before the charging is completed, if it is 0, the charging is completed
+  dischargingTime: number; // Represents how many seconds it takes for the battery to drain to empty and hang up
+  level: number; // Represents the level of power amplification, this value is between 0.0 and 1.0
   [key: string]: any;
 }
 
@@ -18,7 +18,7 @@ export const useBattery = () => {
     },
   });
 
-  // 更新电池使用状态
+  // Update battery status
   const updateBattery = (target) => {
     for (const key in state.battery) {
       state.battery[key] = target[key];
@@ -26,29 +26,29 @@ export const useBattery = () => {
     state.battery.level = state.battery.level * 100;
   };
 
-  // 计算电池剩余可用时间
+  // Calculate remaining battery time
   const calcDischargingTime = computed(() => {
     const hour = state.battery.dischargingTime / 3600;
     const minute = (state.battery.dischargingTime / 60) % 60;
-    return `${~~hour}小时${~~minute}分钟`;
+    return `${~~hour}:${~~minute}`;
   });
 
-  // 计算电池充满剩余时间
+  // Calculate the remaining time to fully charge the battery
   const calcChargingTime = computed(() => {
     console.log(state.battery);
     const hour = state.battery.chargingTime / 3600;
     const minute = (state.battery.chargingTime / 60) % 60;
-    return `${~~hour}小时${~~minute}分钟`;
+    return `${~~hour}:${~~minute}`;
   });
 
-  // 电池状态
+  // Battery status
   const batteryStatus = computed(() => {
     if (state.battery.charging && state.battery.level >= 100) {
-      return '已充满';
+      return 'be filled';
     } else if (state.battery.charging) {
-      return '充电中';
+      return 'charging';
     } else {
-      return '已断开电源';
+      return 'Power disconnected';
     }
   });
 
@@ -56,19 +56,19 @@ export const useBattery = () => {
     const BatteryManager: Battery = await (window.navigator as any).getBattery();
     updateBattery(BatteryManager);
 
-    // 电池充电状态更新时被调用
+    // Called when the battery charge status is updated
     BatteryManager.onchargingchange = ({ target }) => {
       updateBattery(target);
     };
-    // 电池充电时间更新时被调用
+    // Called when the battery charging time is updated
     BatteryManager.onchargingtimechange = ({ target }) => {
       updateBattery(target);
     };
-    // 电池断开充电时间更新时被调用
+    // Called when the battery is disconnected and the charging time is updated
     BatteryManager.ondischargingtimechange = ({ target }) => {
       updateBattery(target);
     };
-    // 电池电量更新时被调用
+    // Called when the battery level is updated
     BatteryManager.onlevelchange = ({ target }) => {
       updateBattery(target);
     };

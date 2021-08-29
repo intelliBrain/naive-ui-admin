@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="n-layout-page-header">
-      <n-card :bordered="false" title="菜单权限管理">
-        页面数据为 Mock 示例数据，非真实数据。
+      <n-card :bordered="false" title="Menu authority management">
+        The page data is mock sample data, not real data.
       </n-card>
     </div>
     <n-grid class="mt-4" cols="1 s:1 m:1 l:3 xl:3 2xl:3" responsive="screen" :x-gap="12">
@@ -12,7 +12,7 @@
             <n-space>
               <n-dropdown trigger="hover" @select="selectAddMenu" :options="addMenuOptions">
                 <n-button type="info" ghost icon-placement="right">
-                  添加菜单
+                  Add menu
                   <template #icon>
                     <div class="flex items-center">
                       <n-icon size="14">
@@ -23,7 +23,7 @@
                 </n-button>
               </n-dropdown>
               <n-button type="info" ghost icon-placement="left" @click="packHandle">
-                全部{{ expandedKeys.length ? '收起' : '展开' }}
+                All{{ expandedKeys.length ? '收起' : 'Unfold' }}
                 <template #icon>
                   <div class="flex items-center">
                     <n-icon size="14">
@@ -73,10 +73,12 @@
               <n-icon size="18">
                 <FormOutlined />
               </n-icon>
-              <span>编辑菜单{{ treeItemTitle ? `：${treeItemTitle}` : '' }}</span>
+              <span>Edit menu{{ treeItemTitle ? `：${treeItemTitle}` : '' }}</span>
             </n-space>
           </template>
-          <n-alert type="info" closable> 从菜单列表选择一项后，进行编辑</n-alert>
+          <n-alert type="info" closable>
+            After selecting an item from the menu list, edit it</n-alert
+          >
           <n-form
             :model="formParams"
             :rules="rules"
@@ -86,35 +88,41 @@
             v-if="isEditMenu"
             class="py-4"
           >
-            <n-form-item label="类型" path="type">
-              <span>{{ formParams.type === 1 ? '侧边栏菜单' : '' }}</span>
+            <n-form-item label="Type" path="type">
+              <span>{{ formParams.type === 1 ? 'Sidebar menu' : '' }}</span>
             </n-form-item>
-            <n-form-item label="标题" path="label">
-              <n-input placeholder="请输入标题" v-model:value="formParams.label" />
+            <n-form-item label="Title" path="label">
+              <n-input placeholder="Please enter a title" v-model:value="formParams.label" />
             </n-form-item>
-            <n-form-item label="副标题" path="subtitle">
-              <n-input placeholder="请输入副标题" v-model:value="formParams.subtitle" />
+            <n-form-item label="Subtitle" path="subtitle">
+              <n-input
+                placeholder="Please enter the subtitle"
+                v-model:value="formParams.subtitle"
+              />
             </n-form-item>
-            <n-form-item label="路径" path="path">
-              <n-input placeholder="请输入路径" v-model:value="formParams.path" />
+            <n-form-item label="Path" path="path">
+              <n-input placeholder="Please enter the path" v-model:value="formParams.path" />
             </n-form-item>
-            <n-form-item label="打开方式" path="openType">
+            <n-form-item label="Open way" path="openType">
               <n-radio-group v-model:value="formParams.openType" name="openType">
                 <n-space>
-                  <n-radio :value="1">当前窗口</n-radio>
-                  <n-radio :value="2">新窗口</n-radio>
+                  <n-radio :value="1">Current window</n-radio>
+                  <n-radio :value="2">New window</n-radio>
                 </n-space>
               </n-radio-group>
             </n-form-item>
-            <n-form-item label="菜单权限" path="auth">
-              <n-input placeholder="请输入权限，多个权限用，分割" v-model:value="formParams.auth" />
+            <n-form-item label="Menu permissions" path="auth">
+              <n-input
+                placeholder="Please enter permissions, multiple permissions are used, split"
+                v-model:value="formParams.auth"
+              />
             </n-form-item>
             <n-form-item path="auth" style="margin-left: 100px">
               <n-space>
                 <n-button type="primary" :loading="subLoading" @click="formSubmit"
-                  >保存修改</n-button
+                  >Save changes</n-button
                 >
-                <n-button @click="handleReset">重置</n-button>
+                <n-button @click="handleReset">Reset</n-button>
               </n-space>
             </n-form-item>
           </n-form>
@@ -135,12 +143,12 @@
   const rules = {
     label: {
       required: true,
-      message: '请输入标题',
+      message: 'Please enter a title',
       trigger: 'blur',
     },
     path: {
       required: true,
-      message: '请输入路径',
+      message: 'Please enter the path',
       trigger: 'blur',
     },
   };
@@ -168,12 +176,12 @@
 
   const addMenuOptions = ref([
     {
-      label: '添加顶级菜单',
+      label: 'Add top menu',
       key: 'home',
       disabled: false,
     },
     {
-      label: '添加子菜单',
+      label: 'Add submenu',
       key: 'son',
       disabled: isAddSon,
     },
@@ -189,7 +197,7 @@
   });
 
   function selectAddMenu(key: string) {
-    drawerTitle.value = key === 'home' ? '添加顶栏菜单' : `添加子菜单：${treeItemTitle.value}`;
+    drawerTitle.value = key === 'home' ? 'Add top bar menu' : `Add submenu: ${treeItemTitle.value}`;
     openCreateDrawer();
   }
 
@@ -213,16 +221,16 @@
   }
 
   function handleReset() {
-    const treeItem = getTreeItem(unref(treeData), treeItemKey[0]);
+    const treeItem = getTreeItem(unref(treeData), treeItemKey.value[0]);
     formParams = Object.assign(formParams, treeItem);
   }
 
   function formSubmit() {
     formRef.value.validate((errors: boolean) => {
       if (!errors) {
-        message.error('抱歉，您没有该权限');
+        message.error('Sorry, you do not have the permission');
       } else {
-        message.error('请填写完整信息');
+        message.error('Please fill in the complete information');
       }
     });
   }

@@ -32,7 +32,7 @@ const routes: Array<RouteRecordRaw> = [
         path: 'console',
         name: `${routeName}_console`,
         meta: {
-          title: '主控台',
+          title: 'Console',
           permissions: ['dashboard_console'],
         },
         component: () => import('@/views/dashboard/console/console.vue'),
@@ -50,7 +50,7 @@ const routes: Array<RouteRecordRaw> = [
         path: 'workplace',
         name: `${routeName}_workplace`,
         meta: {
-          title: '工作台',
+          title: 'Workbench',
           keepAlive: true,
           permissions: ['dashboard_workplace'],
         },

@@ -21,7 +21,7 @@ const routes: Array<RouteRecordRaw> = [
     redirect: '/setting/account',
     component: Layout,
     meta: {
-      title: '设置页面',
+      title: 'Settings page',
       icon: renderIcon(SettingOutlined),
       sort: 5,
     },
@@ -30,7 +30,7 @@ const routes: Array<RouteRecordRaw> = [
         path: 'account',
         name: 'setting-account',
         meta: {
-          title: '个人设置',
+          title: 'Personal settings',
         },
         component: () => import('@/views/setting/account/account.vue'),
       },
@@ -38,7 +38,7 @@ const routes: Array<RouteRecordRaw> = [
         path: 'system',
         name: 'setting-system',
         meta: {
-          title: '系统设置',
+          title: 'System settings',
         },
         component: () => import('@/views/setting/system/system.vue'),
       },

@@ -21,7 +21,7 @@ const routes: Array<RouteRecordRaw> = [
     redirect: '/system/menu',
     component: Layout,
     meta: {
-      title: '系统设置',
+      title: 'System Settings',
       icon: renderIcon(OptionsSharp),
       sort: 1,
     },
@@ -30,7 +30,7 @@ const routes: Array<RouteRecordRaw> = [
         path: 'menu',
         name: 'system_menu',
         meta: {
-          title: '菜单权限管理',
+          title: 'Menu authority management',
         },
         component: () => import('@/views/system/menu/menu.vue'),
       },
